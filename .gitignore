@@ -58,3 +58,10 @@ next-env.d.ts
 !/public/assets/sc/building_tower_out/building_tower_sprite_200.png
 !/public/assets/sc/building_tower_out/building_tower_sprite_050.png
 !/public/assets/sc/building_tower_out/building_tower_sprite_101.png
+
+# AI guidelines & roadmaps
+/agent.md
+/AGENTS.md
+/CLAUDE.md
+/fullplan.md
+
