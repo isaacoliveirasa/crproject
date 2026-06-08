@@ -173,7 +173,7 @@ Expected output:
 ## 👨‍💻 About the Author
 
 <div align="center">  
-  Hello, my name is <strong>Isaac Sa</strong>. I have been developing systems for over 20 years. This project is a practical application of the knowledge I acquired when completing Google's <strong>Agent Development Kit (ADK) course</strong>, which I highly recommend taking! You can check it out here: <a href="https://www.skills.google/paths?pathslistid=agents">Google ADK Course</a>.
+Hello, my name is <strong>Isaac Sa</strong>. I have been developing systems for over 20 years. As a passionate Clash Royale enthusiast, I built this open-source project to help players master positioning tactics, defensive kiting, and improve their competitive gameplay skills.
 </div>
 
 Let's connect:
