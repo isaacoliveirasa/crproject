@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +40,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# unused templates / reference code
+/public/ClashRoyale-main
+/public/clash-royale-clone-master
+
+# Ignore all extracted clash royale game files except the 7 files actually used by ArenaCanvas
+/public/assets/sc/*
+!/public/assets/sc/building_tower_out/
+/public/assets/sc/building_tower_out/*
+!/public/assets/sc/arena_training_tex.png
+!/public/assets/sc/building_tower_out/building_tower_sprite_201.png
+!/public/assets/sc/building_tower_out/building_tower_sprite_203.png
+!/public/assets/sc/building_tower_out/building_tower_sprite_199.png
+!/public/assets/sc/building_tower_out/building_tower_sprite_200.png
+!/public/assets/sc/building_tower_out/building_tower_sprite_050.png
+!/public/assets/sc/building_tower_out/building_tower_sprite_101.png

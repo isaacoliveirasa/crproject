@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id               String       @id @default(uuid())
+  username         String       @unique
+  email            String?      @unique
+  glickoRating     Float        @default(1500.0)
+  glickoRD         Float        @default(350.0)
+  glickoVolatility Float        @default(0.06)
+  createdAt        DateTime     @default(now())
+  attempts         Attempt[]
+  posts            ForumPost[]
+}
+
+model Puzzle {
+  id               String       @id @default(uuid())
+  title            String
+  description      String
+  difficulty       String       // "easy", "medium", "hard", "pro"
+  glickoRating     Float        @default(1500.0)
+  glickoRD         Float        @default(350.0)
+  glickoVolatility Float        @default(0.06)
+  hand             Json         // String array of card IDs
+  enemyTroop       Json         // Coordinates & details of target path
+  solutions        Json         // Map of coordinate keys to quality ratings
+  hints            Json         // String array of hints
+  createdAt        DateTime     @default(now())
+  attempts         Attempt[]
+}
+
+model Attempt {
+  id               String       @id @default(uuid())
+  userId           String
+  puzzleId         String
+  quality          String       // "optimal", "good", "acceptable", "bad"
+  solved           Boolean
+  oldUserRating    Float
+  newUserRating    Float
+  oldPuzzleRating  Float
+  newPuzzleRating  Float
+  createdAt        DateTime     @default(now())
+
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  puzzle           Puzzle       @relation(fields: [puzzleId], references: [id], onDelete: Cascade)
+}
+
+model ForumPost {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  authorId  String
+  createdAt DateTime @default(now())
+
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model CardIntelligence {
+  id         String   @id // e.g. "cannon", "skeletons", "giant"
+  name       String
+  cost       Int
+  type       String   // "troop", "building", "spell"
+  movement   String   // "ground", "air", "none" (for buildings/spells)
+  targets    String   // "ground", "air", "both", "buildings"
+  range      Float    // Pull radius or attack range in tiles
+  description String
+  createdAt  DateTime @default(now())
+}
+

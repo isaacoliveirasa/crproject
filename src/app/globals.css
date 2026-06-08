@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0b0d19;
+  --foreground: #f3f4f6;
+  --arena-dark: #0f1220;
+  --card-dark: #181d30;
+  --elixir: #e812a6;
+  --elixir-hover: #fa42cd;
+  --gold: #ffd700;
+  --gold-accent: #e5a93b;
+  --crown-blue: #1b6cfb;
+  --crown-red: #e83d3d;
+  --border-glow: rgba(232, 18, 166, 0.15);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-arena-dark: var(--arena-dark);
+  --color-card-dark: var(--card-dark);
+  --color-elixir: var(--elixir);
+  --color-elixir-hover: var(--elixir-hover);
+  --color-gold: var(--gold);
+  --color-gold-accent: var(--gold-accent);
+  --color-crown-blue: var(--crown-blue);
+  --color-crown-red: var(--crown-red);
 }
 
 body {
-  background: var(--background);
+  background: radial-gradient(circle at top, #141b2f 0%, #070911 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  min-height: 100vh;
+  overflow-x: hidden;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #070911;
+}
+::-webkit-scrollbar-thumb {
+  background: #181d30;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffd700;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(24, 29, 48, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
