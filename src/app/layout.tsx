@@ -6,6 +6,9 @@ import { Swords, MessageSquare, LineChart, Cpu, LayoutGrid } from 'lucide-react'
 export const metadata: Metadata = {
   title: "Clash Tactics | Clash Royale Community Hub",
   description: "Lichess-inspired open-source platform for Clash Royale positioning puzzles, deck builders, and community forum.",
+  icons: {
+    icon: "/CTLogo.ico",
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +24,7 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <span className="text-2xl group-hover:scale-110 transition-transform duration-200">👑</span>
+              <img src="/CTLogo.webp" alt="Clash Tactics Logo" className="h-8 w-8 object-contain group-hover:scale-110 transition-transform duration-200" />
               <span className="font-extrabold text-lg tracking-wider bg-gradient-to-r from-gold via-white to-gold-accent bg-clip-text text-transparent">
                 CLASH TACTICS
               </span>
@@ -98,7 +101,7 @@ export default function RootLayout({
         <footer className="glass-panel border-t border-white/5 py-8 mt-12 hidden md:block">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-xl">👑</span>
+              <img src="/CTLogo.webp" alt="Clash Tactics Logo" className="h-6 w-6 object-contain" />
               <span className="text-sm font-bold text-gray-400">Clash Tactics Hub</span>
             </div>
             <p className="text-xs text-gray-500 text-center md:text-left">
