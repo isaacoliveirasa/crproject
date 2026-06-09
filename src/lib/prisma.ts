@@ -10,10 +10,12 @@ const globalForPrisma = globalThis as unknown as {
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
-  throw new Error('DATABASE_URL is not set in environment variables.');
+  console.warn('DATABASE_URL is not set. Using dummy connection string for build/initialization.');
 }
 
-const pool = new Pool({ connectionString });
+const pool = new Pool({
+  connectionString: connectionString || 'postgresql://postgres:postgres@localhost:5432/postgres'
+});
 const adapter = new PrismaPg(pool);
 
 export const prisma =
