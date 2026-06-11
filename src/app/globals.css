@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0b0d19;
-  --foreground: #f3f4f6;
-  --arena-dark: #0f1220;
-  --card-dark: #181d30;
+  --background: #06070f;
+  --foreground: #f4f5f7;
+  --arena-dark: #0d101e;
+  --card-dark: #141929;
   --elixir: #e812a6;
   --elixir-hover: #fa42cd;
   --gold: #ffd700;
@@ -25,36 +25,181 @@
   --color-gold-accent: var(--gold-accent);
   --color-crown-blue: var(--crown-blue);
   --color-crown-red: var(--crown-red);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "Cascadia Code", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: radial-gradient(circle at top, #141b2f 0%, #070911 100%);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232, 18, 166, 0.10), transparent),
+    radial-gradient(ellipse 60% 40% at 85% 15%, rgba(27, 108, 251, 0.08), transparent),
+    radial-gradient(circle at top, #11182b 0%, #06070f 65%);
   color: var(--foreground);
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Film-grain noise overlay — the cheap trick that makes flat dark UIs feel expensive */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: rgba(232, 18, 166, 0.45);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--elixir);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #070911;
+  background: #06070f;
 }
 ::-webkit-scrollbar-thumb {
-  background: #181d30;
-  border-radius: 4px;
+  background: #1c2237;
+  border-radius: 6px;
+  border: 2px solid #06070f;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffd700;
+  background: var(--gold-accent);
 }
 
 /* Glassmorphism helpers */
 .glass-panel {
-  background: rgba(24, 29, 48, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(160deg, rgba(24, 29, 48, 0.72), rgba(13, 16, 30, 0.62));
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+/* Display typography */
+.font-display {
+  font-family: var(--font-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(100deg, var(--gold) 0%, #fff7d6 45%, var(--gold-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-elixir {
+  background: linear-gradient(100deg, #fa42cd 0%, #c026d3 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Section eyebrow label */
+.eyebrow {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(244, 245, 247, 0.45);
+}
+
+/* Card with hover glow + lift */
+.card-interactive {
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s, box-shadow 0.35s;
+}
+.card-interactive:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 215, 0, 0.25);
+  box-shadow:
+    0 12px 40px -12px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 215, 0, 0.08),
+    0 0 48px -16px rgba(232, 18, 166, 0.35);
+}
+
+/* Animated nav link underline */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--elixir), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Primary CTA button shine sweep */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+.btn-shine:hover::before {
+  transform: translateX(120%);
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-float-slow {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

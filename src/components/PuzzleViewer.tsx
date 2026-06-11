@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Puzzle, Card, Position, SolutionQuality } from '@/types/game';
 import { mockCards } from '@/data/mockData';
 import { fetchMergedCards } from '@/lib/cards';
-import ArenaCanvas from './ArenaCanvas';
-import { Shield, Sparkles, HelpCircle, RefreshCw, Play, CheckCircle } from 'lucide-react';
+import ArenaStage from './ArenaStage';
+import { canDeployAt } from '@/lib/arena/tilemap';
+import { HelpCircle, RefreshCw, Play, CheckCircle } from 'lucide-react';
 
 interface PuzzleViewerProps {
   puzzle: Puzzle;
@@ -47,6 +48,8 @@ export default function PuzzleViewer({ puzzle, onNextPuzzle }: PuzzleViewerProps
 
   const handlePlaceCard = (pos: Position) => {
     if (isPlaying) return;
+    // Regra do Clash Royale: tropas/construções só na própria metade
+    if (!canDeployAt(pos.x, pos.y, { spell: selectedCard?.type === 'spell' })) return;
     setPlacedPosition(pos);
     setResult(null);
   };
@@ -113,7 +116,7 @@ export default function PuzzleViewer({ puzzle, onNextPuzzle }: PuzzleViewerProps
     <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-stretch w-full max-w-5xl mx-auto p-2 sm:p-4">
       {/* Interactive Arena Column */}
       <div className="flex justify-center items-center w-full lg:flex-1">
-        <ArenaCanvas
+        <ArenaStage
           selectedCard={selectedCard}
           placedPosition={placedPosition}
           onPlaceCard={handlePlaceCard}
@@ -138,7 +141,7 @@ export default function PuzzleViewer({ puzzle, onNextPuzzle }: PuzzleViewerProps
             </span>
           </div>
 
-          <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white mb-2">{puzzle.title}</h2>
+          <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">{puzzle.title}</h2>
           <p className="text-xs text-gray-400 mb-2">Created by <span className="text-gold-accent font-semibold">@{puzzle.author}</span></p>
           <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6 bg-black/30 p-3 sm:p-4 rounded-lg border border-white/5">
             {puzzle.description}
@@ -243,7 +246,7 @@ export default function PuzzleViewer({ puzzle, onNextPuzzle }: PuzzleViewerProps
                 <button
                   onClick={handleStartSimulation}
                   disabled={isPlaying}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-elixir hover:bg-elixir-hover disabled:opacity-50 text-white font-semibold text-sm transition-all shadow-md"
+                  className="btn-shine flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-elixir hover:bg-elixir-hover disabled:opacity-50 text-white font-semibold text-sm transition-all shadow-lg shadow-elixir/25"
                 >
                   <Play className="h-4 w-4" /> Start Arena Simulation
                 </button>
